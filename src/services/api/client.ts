@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const apiClient = axios.create({
-  baseURL: 'https://dummyjson.com',
+  baseURL: 'https://minishop-backend-ezc8.onrender.com',
 
   timeout: 10000,
 

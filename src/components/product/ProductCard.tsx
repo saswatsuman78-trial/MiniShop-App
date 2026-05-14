@@ -8,6 +8,17 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+import {
+  toggleWishlist,
+} from '../../store/slices/wishlistSlice';
+
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../hooks/redux';
+
 import { Product } from '../../types/product';
 
 import { colors } from '../../theme/color';
@@ -27,6 +38,17 @@ function ProductCard({
       product.discountPercentage) /
       100;
 
+  const dispatch = useAppDispatch();
+
+const wishlistItems = useAppSelector(
+  state => state.wishlist.items
+);
+
+const isWishlisted =
+  wishlistItems.some(
+    item => item.id === product.id
+  );
+
   return (
     <TouchableOpacity
       activeOpacity={0.85}
@@ -37,6 +59,29 @@ function ProductCard({
         source={{ uri: product.thumbnail }}
         style={styles.image}
       />
+
+      <TouchableOpacity
+  style={styles.wishlistButton}
+  onPress={() =>
+    dispatch(
+      toggleWishlist(product)
+    )
+  }
+>
+  <Ionicons
+    name={
+      isWishlisted
+        ? 'heart'
+        : 'heart-outline'
+    }
+    size={22}
+    color={
+      isWishlisted
+        ? '#ff4d6d'
+        : '#ffffff'
+    }
+  />
+</TouchableOpacity>
 
       <View style={styles.content}>
         <Text
@@ -165,5 +210,22 @@ const styles = StyleSheet.create({
 
     fontSize: 12,
   },
+
+  wishlistButton: {
+  position: 'absolute',
+
+  top: 12,
+
+  right: 12,
+
+  zIndex: 10,
+
+  backgroundColor:
+    'rgba(0,0,0,0.35)',
+
+  padding: 8,
+
+  borderRadius: 999,
+},
 });
 export default React.memo(ProductCard);

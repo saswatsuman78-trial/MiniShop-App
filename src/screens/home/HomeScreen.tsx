@@ -24,6 +24,7 @@ import {
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
 
+import { useMemo } from 'react';
 import { RootStackParamList } from '../../types/navigation';
 
 import ProductCard from '../../components/product/ProductCard';
@@ -37,6 +38,10 @@ import EmptyState from '../../components/common/EmptyState';
 import SearchBar from '../../components/common/SearchBar';
 
 import AppHeader from '../../components/common/AppHeader';
+
+import FilterBar from '../../components/filter/FilterBar';
+
+import FilterModal from '../../components/filter/FilterModal';
 
 import {
   useAppDispatch,
@@ -61,6 +66,16 @@ export default function HomeScreen({
 }: Props) {
   const dispatch = useAppDispatch();
 
+  const wishlistItems =
+  useAppSelector(
+    state => state.wishlist.items
+  );
+    const filters = useAppSelector(
+    state => state.filters
+  );
+const [showFilters, setShowFilters] =
+  useState(false);  
+
   const {
     products,
     loading,
@@ -68,6 +83,69 @@ export default function HomeScreen({
   } = useAppSelector(
     state => state.products
   );
+
+  const filteredProducts =
+  useMemo(() => {
+    let filtered = [...products];
+
+    if (
+      filters.selectedCategories
+        .length > 0
+    ) {
+      filtered = filtered.filter(
+        product =>
+          filters.selectedCategories.includes(
+            product.category
+          )
+      );
+    }
+
+    filtered = filtered.filter(
+      product =>
+        product.price >=
+          filters.minPrice &&
+        product.price <=
+          filters.maxPrice
+    );
+
+    filtered = filtered.filter(
+      product =>
+        product.rating >=
+        filters.minRating
+    );
+
+    if (filters.inStockOnly) {
+      filtered = filtered.filter(
+        product =>
+          product.stock > 0
+      );
+    }
+
+    switch (filters.sortBy) {
+      case 'price_asc':
+        filtered.sort(
+          (a, b) =>
+            a.price - b.price
+        );
+        break;
+
+      case 'price_desc':
+        filtered.sort(
+          (a, b) =>
+            b.price - a.price
+        );
+        break;
+
+      case 'rating':
+        filtered.sort(
+          (a, b) =>
+            b.rating - a.rating
+        );
+        break;
+    }
+
+    return filtered;
+  }, [products, filters]);
 
   const cartItems = useAppSelector(
     state => state.cart.items
@@ -146,14 +224,32 @@ export default function HomeScreen({
     >
       <AppHeader
         title="MiniShop"
-        rightText={`Cart (${cartItems.length})`}
-        onRightPress={handleCartPress}
-        />
+        rightText={`❤️ ${wishlistItems.length}`}
+
+        onRightPress={() =>
+          navigation.navigate(
+            'Wishlist'
+          )
+        }
+      />
 
       <SearchBar
         value={searchQuery}
         onChangeText={
           setSearchQuery
+        }
+      />
+
+      <FilterBar
+        onPressFilters={() =>
+          setShowFilters(true)
+        }
+      />
+
+      <FilterModal
+        visible={showFilters}
+        onClose={() =>
+          setShowFilters(false)
         }
       />
 
@@ -165,7 +261,7 @@ export default function HomeScreen({
         />
       ) : (
         <FlatList
-          data={products}
+          data={filteredProducts}
           keyExtractor={item =>
             item.id.toString()
           }

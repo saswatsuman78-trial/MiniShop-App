@@ -154,7 +154,13 @@ export default function ProductDetailScreen({
     >
       <ImageCarousel
         images={
-          selectedProduct.images
+          selectedProduct.images &&
+          selectedProduct.images.length >
+            0
+            ? selectedProduct.images
+            : [
+                selectedProduct.thumbnail,
+              ]
         }
       />
 
@@ -221,73 +227,83 @@ export default function ProductDetailScreen({
           }
         </Text>
 
-        <View
-          style={
-            styles.tagsContainer
-          }
-        >
-          {selectedProduct.tags.map(
-            tag => (
-              <View
-                key={tag}
-                style={styles.tag}
-              >
-                <Text
-                  style={
-                    styles.tagText
-                  }
-                >
-                  {tag}
-                </Text>
-              </View>
-            )
-          )}
-        </View>
+        {selectedProduct.tags &&
+  selectedProduct.tags.length >
+    0 && (
+    <View
+      style={
+        styles.tagsContainer
+      }
+    >
+      {selectedProduct.tags.map(
+        tag => (
+          <View
+            key={tag}
+            style={styles.tag}
+          >
+            <Text
+              style={
+                styles.tagText
+              }
+            >
+              {tag}
+            </Text>
+          </View>
+        )
+      )}
+    </View>
+)}
 
-        <View
-          style={
-            styles.reviewSection
-          }
-        >
-          <Text
+        {selectedProduct.reviews &&
+  selectedProduct.reviews
+    .length > 0 && (
+    <View
+      style={
+        styles.reviewSection
+      }
+    >
+      <Text
+        style={
+          styles.reviewTitle
+        }
+      >
+        Reviews
+      </Text>
+
+      {selectedProduct.reviews
+        .slice(0, 2)
+        .map(review => (
+          <View
+            key={
+              review.reviewerEmail
+            }
             style={
-              styles.reviewTitle
+              styles.reviewCard
             }
           >
-            Reviews
-          </Text>
+            <Text
+              style={
+                styles.reviewName
+              }
+            >
+              {
+                review.reviewerName
+              }
+            </Text>
 
-          {selectedProduct.reviews
-            .slice(0, 2)
-            .map(review => (
-              <View
-                key={
-                  review.reviewerEmail
-                }
-                style={
-                  styles.reviewCard
-                }
-              >
-                <Text
-                  style={
-                    styles.reviewName
-                  }
-                >
-                  {
-                    review.reviewerName
-                  }
-                </Text>
-
-                <Text
-                  style={
-                    styles.reviewComment
-                  }
-                >
-                  {review.comment}
-                </Text>
-              </View>
-            ))}
-        </View>
+            <Text
+              style={
+                styles.reviewComment
+              }
+            >
+              {
+                review.comment
+              }
+            </Text>
+          </View>
+        ))}
+    </View>
+)}
 
         <PrimaryButton
           title={

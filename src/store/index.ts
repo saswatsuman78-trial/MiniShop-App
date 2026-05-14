@@ -12,6 +12,8 @@ import {
 
 import cartReducer from './slices/cartSlice';
 import productsReducer from './slices/productsSlice';
+import wishlistReducer from './slices/wishlistSlice';
+import filterReducer from './slices/filterSlice';
 
 const persistConfig = {
   key: 'root',
@@ -23,8 +25,9 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   cart: cartReducer,
-
   products: productsReducer,
+  wishlist: wishlistReducer,
+  filters: filterReducer,
 });
 
 const persistedReducer = persistReducer(

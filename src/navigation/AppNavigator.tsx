@@ -14,6 +14,8 @@ import CheckoutScreen from '../screens/checkout/CheckoutScreen';
 
 import OrderSuccessScreen from '../screens/checkout/OrderSuccessScreen';
 
+import WishlistScreen from '../screens/wishlist/WishlistScreen';
+
 import { RootStackParamList } from '../types/navigation';
 
 const Stack =
@@ -68,6 +70,11 @@ export default function AppNavigator() {
         options={{
           headerShown: false,
         }}
+      />
+
+      <Stack.Screen
+      name="Wishlist"
+      component={WishlistScreen}
       />
     </Stack.Navigator>
   );

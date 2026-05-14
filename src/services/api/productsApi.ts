@@ -1,14 +1,11 @@
 import { apiClient } from './client';
 
-import {
-  Product,
-  ProductsResponse,
-} from '../../types/product';
+import { Product } from '../../types/product';
 
 export const productsApi = {
-  getProducts: async (): Promise<ProductsResponse> => {
+  getProducts: async (): Promise<Product[]> => {
     const response =
-      await apiClient.get<ProductsResponse>(
+      await apiClient.get<Product[]>(
         '/products?limit=30'
       );
 
@@ -28,9 +25,9 @@ export const productsApi = {
 
   searchProducts: async (
     query: string
-  ): Promise<ProductsResponse> => {
+  ): Promise<Product[]> => {
     const response =
-      await apiClient.get<ProductsResponse>(
+      await apiClient.get<Product[]>(
         `/products/search?q=${query}`
       );
 

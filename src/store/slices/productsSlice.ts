@@ -36,7 +36,7 @@ export const fetchProducts =
         const response =
           await productsApi.getProducts();
 
-        return response.products;
+        return response;
       } catch (error: any) {
         return thunkAPI.rejectWithValue(
           error.message ||
@@ -178,7 +178,7 @@ export const searchProducts =
             query
           );
 
-        return response.products;
+        return response;
       } catch (error: any) {
         return thunkAPI.rejectWithValue(
           error.message ||
