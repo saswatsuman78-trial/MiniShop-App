@@ -11,8 +11,14 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-*Will Add demo video link here* · *Will Add APK download link here* · *[Github](https://github.com/saswatsuman78-trial/MiniShop-App)*
+*Will Add demo video link here* · *Will Add APK download link here* · *Will Add GitHub repository link here*
 
+---
+
+
+</div>
+
+---
 
 ## 📖 Overview
 
@@ -154,7 +160,7 @@ https://minishop-backend-ezc8.onrender.com
 
 ## 📱 Screenshots
 
-> _Will Add application screenshots here._
+> _Add application screenshots here._
 
 ---
 
@@ -174,7 +180,7 @@ https://minishop-backend-ezc8.onrender.com
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/saswatsuman78-trial/MiniShop-App
+git clone <repo-url>
 cd minishop
 
 # 2. Install dependencies
@@ -242,7 +248,7 @@ eas login
 eas build -p android --profile preview
 ```
 
-> [⬇️ Download APK](_WillAdd APK download link here_)
+> [⬇️ Download APK](_Add APK download link here_)
 
 ---
 
@@ -296,6 +302,8 @@ eas build -p android --profile preview
 ## 👤 Author
 
 **Saswat Suman Roy**
+
+> *Add GitHub profile link here* · *Add LinkedIn profile link here*
 
 ---
 
